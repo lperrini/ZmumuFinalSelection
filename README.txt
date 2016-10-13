@@ -11,5 +11,7 @@ git clone https://github.com/CMS-HTT/LeptonEfficiencies.git data
 cd ${CMSSW_BASE}/src
 
 git clone https://github.com/lperrini/ZmumuFinalSelection.git
+mv ZmumuFinalSelection/* .
+rm -rf ZmumuFinalSelection
 
 scram b -j 9
