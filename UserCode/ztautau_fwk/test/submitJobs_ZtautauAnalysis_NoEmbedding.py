@@ -489,6 +489,8 @@ samples["TT_3"] = OD([
    ("use_it", True)
 ])
 
+###NB: here you give the name to the output dir
+###check it carefully all the time before running!!!
 outDir = "../data/ntuples/mt_analysis_new"
 outDir2 = "mt_analysis_new"
 
@@ -515,13 +517,6 @@ for sample_name, sample_info in samples.items():
       os.system("mkdir tmp_"+outDir2+"/"+str(sample_info["nameout"][i]))
       os.chdir("tmp_"+outDir2+"/"+str(sample_info["nameout"][i]))
       
-      #nstart = 0
-      #nstop  = int(n_events)
-      #if(sample_info["nameout"][i]=="ZLL5" or sample_info["nameout"][i]=="ZTT5"):
-      #   njobs = int((n_events / nsplit))+1
-      #   if(nsplit<int(n_events)):
-      #      nstop=nsplit
-
       for ijobs in range(0,1):
          fout = open('job'+str(ijobs)+'.sh', 'w')
          fout.write("#!/bin/sh\n")
@@ -533,12 +528,15 @@ for sample_name, sample_info in samples.items():
          fout.write("cd "+str(path)+"/../\n")
          fout.write("cmsenv\n")
          fout.write("cd "+str(path)+"\n")
+         ######## TO RUN MUTAU selection
          fout.write(ScriptName+ " inputFile=/store/user/veelken/Lucia/preselected_V4/"+sample_name+".root outputFile="+outDir+"/"+sample_info["nameout"][i]+".root xsection="+str(n_xsec)+" nevents="+str(n_events)+" sample="+sample_name+" label="+sample_info["labels"][i]+" channel=mt embedding=no channelEB=mt ptcut1=19.0 etacut1=2.1 ptcut2=20.0 etacut2=2.3 met=yes dataOverMadgraphRW=no \n")
+         ######## TO RUN MUMU selection
+         ######## the flag channelEB=mt basically can contain any information, as it is not used when the embedding is not running!!!
+         #fout.write(ScriptName+ " inputFile=/store/user/veelken/Lucia/preselected_V4/"+sample_name+".root outputFile="+outDir+"/"+sample_info["nameout"][i]+".root xsection="+str(n_xsec)+" nevents="+str(n_events)+" sample="+sample_name+" label="+sample_info["labels"][i]+" channel=mm embedding=no channelEB=mt ptcut1=19.0 etacut1=2.1 ptcut2=20.0 etacut2=2.3 met=yes dataOverMadgraphRW=no \n")
          fout.write("echo 'STOP---------------'\n")
          fout.write("echo\n")
          fout.write("echo\n")
          os.system("chmod 755 job"+str(ijobs)+".sh")
-         #if(sample_info["labels"][i]=="ZLL" or sample_info["labels"][i]=="ZTT"):
          os.system("bsub -q "+queue+" -o logs job"+str(ijobs)+".sh")
       os.chdir("../..")
    
