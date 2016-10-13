@@ -36,13 +36,18 @@ hadd TT.root TT_*
 hadd W.root W1Jets.root W2Jets.root W3Jets.root W4Jets.root WJets.root
 
 ###estimate background -
+
 cd UserCode/ztautau_fwk/script
+
 ###edit EstimateBackground_Analysis_Embedding.py to check if it is poiting to
 ###the correct directory
+
 python EstimateBackground_Analysis_Embedding.py
+
 ###edit Create_Datacards_Analysis_Embedding.py to check if it is poiting to
 ###the correct directory
+
 python Create_Datacards_Analysis_Embedding.py
 
 ### the datacard obtained has to be copied in the /auxiliaries/shapes/TALLINN
-directory to start performing the combined fit!
+### directory to start performing the combined fit!
